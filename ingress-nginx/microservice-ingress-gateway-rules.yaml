@@ -1,0 +1,106 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600s"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600s"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600s"
+  name: xenon-ingress
+  namespace: cmpaksa-app
+spec:
+  rules:
+    - host: mobapp.aksa.com.pk
+      http:
+        paths:
+          - path: /api/CommonService/v1/
+            backend:
+              serviceName: commonservice-svc
+              servicePort: 80
+          - path: /api/MerchantCSHService/v1/
+            backend:
+              serviceName: merchantcshservice-svc
+              servicePort: 80
+          - path: /api/MerchantFTService/v1/
+            backend:
+              serviceName: merchantftservice-svc
+              servicePort: 80
+          - path: /api/MerchantPMTService/v1/
+            backend:
+              serviceName: merchantpmtservice-svc
+              servicePort: 80
+          - path: /api/MerchantRegistrationService/v1/
+            backend:
+              serviceName: merchantusermanagmentservice-svc
+              servicePort: 80
+          - path: /api/SubscriberCSHService/v1/
+            backend:
+              serviceName: subscribercshservice-svc
+              servicePort: 80
+          - path: /api/SubscriberFTService/v1/
+            backend:
+              serviceName: subscriberftservice-svc
+              servicePort: 80
+          - path: /api/SubscriberPMTService/v1/
+            backend:
+              serviceName: subscriberpmtservice-svc
+              servicePort: 80
+          - path: /api/SubscriberUserManagmentService/v1/
+            backend:
+              serviceName: subscriberusermanagmentservice-svc
+              servicePort: 80
+#########################################################################
+          - path: /api/SubscriberUserManagmentService/v2/
+            backend:
+              serviceName: subscriberusermanagmentservice-svc
+              servicePort: 80
+
+######################################################################################
+          - path: /api/ThirdpartyService/v1/
+            backend:
+              serviceName: thirdpartyservice-svc
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: applinkservice-svc
+              servicePort: 80
+    - host: kibana.aksa.com.pk
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kibana-svc
+              servicePort: 8080
+    - host: merchant.aksa.com.pk
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: zongmfsmerchant-svc
+              servicePort: 80
+    - host: ewp.aksa.com.pk
+      http:
+        paths:
+          - path: /api/HEWPWrapper/v1/
+            backend:
+              serviceName: hewpwrapper-svc
+              servicePort: 80
+
+#    - host: hellocash.aksa.com.pk
+#      http:
+#        paths:
+#          - path: /api/UserManagmentService/
+#            backend:
+#              serviceName: hcusermanagmentservice-svc
+#              servicePort: 80
+#          - path: /api/RequestService/
+#            backend:
+#              serviceName: hcrequestservice-svc
+#              servicePort: 80
+#          - path: /api/PushNotificationService/
+#            backend:
+#              serviceName: hcpushnotificationservice-svc
+#              servicePort: 80
+
